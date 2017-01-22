@@ -1,0 +1,94 @@
+.include "/Users/wonsoyoung/Downloads/50002/nominal.jsim"
+.include "/Users/wonsoyoung/Downloads/50002/8clocks.jsim"
+.include "/Users/wonsoyoung/Downloads/50002/lab2checkoff.jsim"
+
+
+
+.subckt nand2 a b z
+MPD1 z a 1 0 NENH sw=2 sl=1
+MPD2 1 b 0 0 NENH sw=2 sl=1
+MPU1 z a vdd vdd PENH sw=4 sl=1
+MPU2 z b vdd vdd PENH sw=4 sl=1
+.ends
+
+
+.subckt nor2 a b z
+MPD1 z a 0 0 NENH sw=2 sl=1
+MPD2 z b 0 0 NENH sw=2 sl=1
+MPU1 1 a vdd vdd PENH sw=4 sl=1
+MPU2 z b vdd 1 PENH sw=4 sl=1
+.ends
+
+.subckt xor2 a b z
+XNOR a b 1 nor2
+MPD1 z a 4 0 NENH sw=2 sl=1
+MPD2 4 b 0 0 NENH sw=2 sl=1
+MPD3 z 1 0 0 NENH sw=2 sl=1
+MPU1 3 a vdd vdd PENH sw=2 sl=1
+MPU2 z 1 3 vdd PENH sw=2 sl=1
+MPU3 3 0 vdd vdd PENH sw=2 sl=1
+.ends
+
+.subckt xnor2 a b z
+XNAND a b 1 nand2
+MPU1 z 1 vdd vdd PENH sw=4 sl=1
+MPU2 3 b vdd vdd PENH sw=4 sl=1
+MPU3 z a 3 vdd PENH sw=4 sl=1
+MPD1 z 1 4 0 NENH sw=2 sl=1
+MPD2 4 b 0 0 NENH sw=2 sl=1
+MPD3 4 a 0 0 NENH sw=2 sl=1
+.ends
+
+
+
+.subckt FA a b ci s co
+MPU1 3 a vdd vdd PENH sw=4 sl=1
+MPU2 3 b vdd vdd PENH sw=4 sl=1
+MPU3 4 b 3 vdd PENH sw=4 sl=1
+MPU4 5 ci 3 vdd PENH sw=4 sl=1
+MPU5 5 a 4 vdd PENH sw=4 sl=1
+MPU6 co 5 vdd vdd PENH sw=4 sl=1
+MPU7 8 5 6 vdd PENH sw=4 sl=1
+MPU8 13 ci vdd vdd PENH sw=4 sl=1
+MPU9 13 a vdd vdd PENH sw=4 sl=1
+MPU10 13 b vdd vdd PENH sw=4 sl=1
+MPU11 9 a 13 vdd PENH sw=4 sl=1
+MPU12 10 b 9 vdd PENH sw=4 sl=1
+MPU13 8 ci 10 vdd PENH sw=4 sl=1
+MPU14 s 8 vdd vdd PENH sw=4 sl=1
+MPD1 5 ci 7 0 NENH sw=2 sl=1
+MPD2 7 a 0 0 NENH sw=2 sl=1
+MPD3 7 b 0 0 NENH sw=2 sl=1
+MPD4 5 a 14 0 NENH sw=2 sl=1
+MPD5 14 b 0 0 NENH sw=2 sl=1
+MPD6 co 5 0 0 NENH sw=2 sl=1
+MPD7 8 5 15 0 NENH sw=2 sl=1
+MPD8 15 a 0 0 NENH sw=2 sl=1
+MPD9 15 b 0 0 NENH sw=2 sl=1
+MPD10 15 ci 0 0 NENH sw=2 sl=1
+MPD11 8 ci 11 0 NENH sw=2 sl=1
+MPD12 11 a 12 0 NENH sw=2 sl=1
+MPD13 12 b 0 0 NENH sw=2 sl=1
+MPD14 s 8 0 0 NENH sw=2 sl=1
+.ends
+
+.subckt ADDER4 a3 a2 a1 a0 b3 b2 b1 b0 s4 s3 s2 s1 s0
+Xbit0 a0 b0 0 s0 c0 FA
+Xbit1 a1 b1 c0 s1 c1 FA
+Xbit2 a2 b2 c1 s2 c2 FA
+Xbit3 a3 b3 c2 s3 s4 FA
+.ends
+
+
+//Xtest clk1 clk2 z xnor2 
+//.tran 20ns  
+//.plot clk1  
+//.plot clk2  
+//.plot z
+Xbit0 a0 b0 0 s0 c0 FA
+.tran 20ns
+.plot a0
+.plot b0
+.plot ci
+.plot s
+.plot co
