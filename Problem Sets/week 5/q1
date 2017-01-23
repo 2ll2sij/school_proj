@@ -1,0 +1,25 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class wk5_matchingwords {
+    public static void main(String[] args) {
+        System.out.println(wordMatch("elf","whiteleaf͟"));
+        System.out.println(wordMatch("elf͟","͞python"));
+    }
+
+    public static boolean wordMatch(String in1, String in2) {
+
+
+        String pattern1 = ".*["+in1+"]+.*";
+        Pattern p1 = Pattern.compile(pattern1);
+        Matcher m1 = p1.matcher(in2);
+
+        if(m1.find())
+        return true;
+        else
+        return false;
+
+
+    }
+
+}
