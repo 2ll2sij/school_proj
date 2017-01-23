@@ -1,0 +1,15 @@
+
+public class wk1_hw_q1 {
+
+    public static void main(String[] args) {
+        System.out.println(birthyear(2013,8));
+    }
+
+    public static int birthyear(int yearCurrent, int age) {
+
+        int yearofbirth = yearCurrent - age;
+
+        return yearofbirth;
+    }
+
+}
